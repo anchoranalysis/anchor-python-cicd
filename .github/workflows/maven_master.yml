@@ -65,5 +65,5 @@ jobs:
         path: docs/_build/html
         
   sonarcloud:
-    uses: ./sonarcloud.yml
+    uses: ./.github/workflows/sonarcloud.yml
     secrets: inherit

@@ -44,8 +44,8 @@ jobs:
       run: |
         black --check .
     - name: Check isort order
-        run: |
-          isort .
+      run: |
+        isort .
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names

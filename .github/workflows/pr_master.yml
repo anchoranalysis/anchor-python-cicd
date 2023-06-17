@@ -9,7 +9,7 @@
 # It is only triggered on dev branch.
 #
 
-name: Python CI for Development branch
+name: python_ci_pr_master
 
 on:
   workflow_call:

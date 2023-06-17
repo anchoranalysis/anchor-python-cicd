@@ -8,7 +8,7 @@
 #
 #
 
-name: Python CI for Development branch
+name: python_ci_push_dev
 
 on:
   workflow_call:

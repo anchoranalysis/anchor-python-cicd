@@ -10,7 +10,7 @@
 # branches.
 #
 
-name: Python CI for master branch
+name: python_ci_push_master
 
 on:
   workflow_call:

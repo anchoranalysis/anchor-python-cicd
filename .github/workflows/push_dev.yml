@@ -26,7 +26,4 @@ jobs:
     uses: ./.github/workflows/_lint_test.yml
     with:
       target_version: '3.11'
-        
-  sonarcloud:
-    uses: ./.github/workflows/_sonarcloud.yml
-    secrets: inherit
+

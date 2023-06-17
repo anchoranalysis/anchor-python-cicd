@@ -1,12 +1,13 @@
 # 
+# Push request triggered by a push to master branch.
+#
 # This workflow will:
 #  - generate Sphinx documentation
 #  - upload Sphinx documentation to GitHub Pages
 #  - submit project state to Sonarccloud.
 #
-# It does not perform linting or formatting checks, or run tests, presuming that they have already been checked on the dev branches.
-#
-# It is only triggered on master branch.
+# It does not perform linting or formatting checks, or run tests, presuming that they have already been checked on the dev
+# branches.
 #
 
 name: Python CI for master branch

@@ -1,39 +1,25 @@
 # 
-# This workflow will:
-#  - perform linting/formatting checks 
-#  - run unit tests
-#  - submit project state to Sonarccloud.submit to Sonarccloud.
+# This workflow will do linting and formatting checks, followed by running tests
 #
-# It is only triggered on dev branch.
-#
-
-name: Python CI for Development branch
+name: Linting and testing
 
 on:
   workflow_call:
     inputs:
-      library-name:
-        required: true
-        type: string
-    secrets:
-      SONAR_TOKEN:
+      target_version:
         required: true        
-
+        type: string
 
 jobs:
-
-  build:
+        
+  lint_test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
-
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python ${{ inputs.target_version }}
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ inputs.target_version }}
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -55,7 +41,4 @@ jobs:
     - name: Test with pytest
       run: |
         tox
-        
-  sonarcloud:
-    uses: ./.github/workflows/sonarcloud.yml
-    secrets: inherit
+ 

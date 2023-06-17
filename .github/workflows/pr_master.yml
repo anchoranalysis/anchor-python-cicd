@@ -1,0 +1,36 @@
+# 
+# Push request triggered by a pull request into master branch
+
+# This workflow will:
+#  - perform linting/formatting checks (across differennt python versions)
+#  - run unit tests (across different python versions)
+#  - submit project state to Sonarccloud.submit to Sonarccloud.
+#
+# It is only triggered on dev branch.
+#
+
+name: Python CI for Development branch
+
+on:
+  workflow_call:
+    inputs:
+      library-name:
+        required: true
+        type: string
+    secrets:
+      SONAR_TOKEN:
+        required: true        
+
+
+jobs:
+  lint_test:
+    strategy:
+      matrix:
+        python-version: ['3.8', '3.9', '3.10', '3.11']    
+    uses: ./.github/workflows/lint_test.yml
+    with:
+      target_version: ${{ matrix.python-version }}
+        
+  sonarcloud:
+    uses: ./.github/workflows/sonarcloud.yml
+    secrets: inherit

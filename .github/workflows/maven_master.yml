@@ -1,9 +1,12 @@
 # 
-# This workflow will generate Sphinx documentation for a Python project and transfer it to Sonarccloud.
+# This workflow will:
+#  - generate Sphinx documentation
+#  - upload Sphinx documentation to GitHub Pages
+#  - submit project state to Sonarccloud.
+#
+# It does not perform linting or formatting checks, or run tests, presuming that they have already been checked on the dev branches.
 #
 # It is only triggered on master branch.
-#
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 #
 
 name: Python CI for master branch
@@ -24,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 3.11
       uses: actions/setup-python@v2
       with:
         python-version: 3.11
@@ -32,17 +35,8 @@ jobs:
       run: |
         sudo apt install pandoc
         python -m pip install --upgrade pip
-        pip install flake8 pytest coverage pytest-cov tox sphinx sphinx-autoapi
-        pip install black==22.6.0
-    - name: Check black formatting
-      run: |
-        black --check .
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics        
+        pip install tox sphinx sphinx-autoapi
+ 
     - name: Build sphinx documentation
       run: |
         tox -e docs

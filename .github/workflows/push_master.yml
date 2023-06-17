@@ -23,42 +23,13 @@ on:
         required: true        
 
 jobs:
-
+        
   sphinx:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.11
-    - name: Install dependencies
-      run: |
-        sudo apt install pandoc
-        python -m pip install --upgrade pip
-        pip install tox sphinx sphinx-autoapi
- 
-    - name: Build sphinx documentation
-      run: |
-        tox -e docs
-        
-        # Add a .nojekyll file so the directories prefixed with an underscore from sphinx e.g. _static are transferred correctly.
-        echo "" > docs/_build/html/.nojekyll
-        
-    - name: Deploy to GitHubPages
-      uses: JamesIves/github-pages-deploy-action@3.7.1
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: docs/_build/html
-        CLEAN: true
-        
-    - name: Upload Sphinx as artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: ${{ inputs.library-name }}-docs
-        path: docs/_build/html
-        
+    uses: ./.github/workflows/_sphinx.yml
+    with:
+      artifact-name: ${{ inputs.library-name }}-docs
+    secrets: inherit
+
   sonarcloud:
-    uses: ./.github/workflows/sonarcloud.yml
+    uses: ./.github/workflows/_sonarcloud.yml
     secrets: inherit

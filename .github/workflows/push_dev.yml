@@ -23,10 +23,10 @@ on:
 
 jobs:
   lint_test:
-    uses: ./.github/workflows/lint_test.yml
+    uses: ./.github/workflows/_lint_test.yml
     with:
       target_version: '3.11'
         
   sonarcloud:
-    uses: ./.github/workflows/sonarcloud.yml
+    uses: ./.github/workflows/_sonarcloud.yml
     secrets: inherit
